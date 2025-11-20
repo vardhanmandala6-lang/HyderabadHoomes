@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Properties - HyderabadHomes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: white;
+            cursor: pointer;
+        }
+
+        .cart-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff0000;
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 900;
+        }
+
+        .filter-bar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1.5rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .current-filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .filter-tag {
+            background: #667eea;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            max-width: 400px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e7ff;
+            border-radius: 25px;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #667eea;
+        }
+
+        .main-container {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem 5%;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
+
+        .sidebar {
+            flex: 0 0 280px;
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+
+        .sidebar h3 {
+            margin-bottom: 1.5rem;
+            color: #1a1a2e;
+            font-size: 1.2rem;
+        }
+
+        .filter-group {
+            margin-bottom: 2rem;
+        }
+
+        .filter-group label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .filter-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .sort-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e7ff;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .products-grid {
+            flex: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .property-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .property-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+        }
+
+        .property-image {
+            width: 100%;
+            height: 220px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            position: relative;
+        }
+
+        .property-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #f5576c;
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 15px;
+            font-weight: 700;
+            font-size: 0.75rem;
+        }
+
+        .property-badge.verified {
+            background: #10b981;
+        }
+
+        .property-badge.hot {
+            background: #f59e0b;
+        }
+
+        .property-info {
+            padding: 1.5rem;
+        }
+
+        .property-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 0.8rem;
+        }
+
+        .property-price {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .property-details {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .property-available {
+            color: #10b981;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+        }
+
+        .property-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 0.9rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-view {
+            background: #e0e7ff;
+            color: #667eea;
+        }
+
+        .btn-view:hover {
+            background: #c7d2fe;
+        }
+
+        .btn-book {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-book:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 4rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo" onclick="goHome()">🏠 HyderabadHomes</div>
+        <button class="cart-btn" onclick="goToCart()">
+            🛒 My Selections
+            <span class="cart-count" id="cartCount">0</span>
+        </button>
+    </nav>
+
+    <div class="filter-bar">
+        <div class="current-filters" id="currentFilters">
+            <span style="font-weight: 700; color: #1a1a2e;">Filters:</span>
+        </div>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Search by landmark, society name...">
+        </div>
+    </div>
+
+    <div class="main-container">
+        <aside class="sidebar">
+            <h3>Refine Results</h3>
+            
+            <div class="filter-group">
+                <h4 style="margin-bottom: 1rem; color: #667eea;">BHK Type</h4>
+                <label><input type="checkbox" value="1BHK"> 1 BHK</label>
+                <label><input type="checkbox" value="2BHK"> 2 BHK</label>
+                <label><input type="checkbox" value="3BHK"> 3 BHK</label>
+                <label><input type="checkbox" value="Studio"> Studio</label>
+            </div>
+
+            <div class="filter-group">
+                <h4 style="margin-bottom: 1rem; color: #667eea;">Furnishing</h4>
+                <label><input type="checkbox" value="Semi-furnished"> Semi-furnished</label>
+                <label><input type="checkbox" value="Fully-furnished"> Fully Furnished</label>
+                <label><input type="checkbox" value="Unfurnished"> Unfurnished</label>
+            </div>
+
+            <div class="filter-group">
+                <h4 style="margin-bottom: 1rem; color: #667eea;">Price Range</h4>
+                <label><input type="checkbox" value="5000-10000"> ₹5k - ₹10k</label>
+                <label><input type="checkbox" value="10000-20000"> ₹10k - ₹20k</label>
+                <label><input type="checkbox" value="20000-30000"> ₹20k - ₹30k</label>
+                <label><input type="checkbox" value="30000-50000"> ₹30k - ₹50k</label>
+                <label><input type="checkbox" value="50000+"> ₹50k+</label>
+            </div>
+
+            <div class="filter-group">
+                <h4 style="margin-bottom: 1rem; color: #667eea;">Sort By</h4>
+                <select class="sort-select" id="sortSelect">
+                    <option value="default">Recommended</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="newest">Newest First</option>
+                </select>
+            </div>
+        </aside>
+
+        <div class="products-grid" id="productsGrid">
+            <!-- Properties will be dynamically loaded here -->
+        </div>
+    </div>
+
+    <script>
+        // Sample property data
+        const properties = [
+            {id: 1, title: "2 BHK in Gachibowli - Near DLF", area: "Gachibowli", bhk: "2BHK", price: 22000, sqft: 1100, furnishing: "Semi-furnished", badge: "verified", available: "1st Dec 2025"},
+            {id: 2, title: "3 BHK Spacious - Hitech City", area: "Hitech City", bhk: "3BHK", price: 35000, sqft: 1500, furnishing: "Fully-furnished", badge: "hot", available: "Immediate"},
+            {id: 3, title: "1 BHK Cozy Apartment - Kondapur", area: "Kondapur", bhk: "1BHK", price: 15000, sqft: 650, furnishing: "Semi-furnished", badge: "new", available: "15th Nov 2025"},
+            {id: 4, title: "2 BHK Premium - Banjara Hills", area: "Banjara Hills", bhk: "2BHK", price: 45000, sqft: 1300, furnishing: "Fully-furnished", badge: "verified", available: "Immediate"},
+            {id: 5, title: "Studio Apartment - Kukatpally", area: "Kukatpally", bhk: "Studio", price: 12000, sqft: 450, furnishing: "Fully-furnished", badge: "hot", available: "20th Nov 2025"},
+            {id: 6, title: "3 BHK Luxury - Jubilee Hills", area: "Jubilee Hills", bhk: "3BHK", price: 65000, sqft: 1800, furnishing: "Fully-furnished", badge: "verified", available: "1st Dec 2025"},
+            {id: 7, title: "2 BHK Near Metro - Ameerpet", area: "Ameerpet", bhk: "2BHK", price: 18000, sqft: 950, furnishing: "Semi-furnished", badge: "new", available: "Immediate"},
+            {id: 8, title: "1 BHK Budget Friendly - Miyapur", area: "Miyapur", bhk: "1BHK", price: 10000, sqft: 550, furnishing: "Unfurnished", badge: "verified", available: "25th Nov 2025"},
+            {id: 9, title: "2 BHK IT Hub - Gachibowli", area: "Gachibowli", bhk: "2BHK", price: 28000, sqft: 1150, furnishing: "Fully-furnished", badge: "hot", available: "Immediate"},
+            {id: 10, title: "3 BHK Family Home - Manikonda", area: "Manikonda", bhk: "3BHK", price: 32000, sqft: 1600, furnishing: "Semi-furnished", badge: "new", available: "10th Dec 2025"},
+        ];
+
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let filters = JSON.parse(localStorage.getItem('filters')) || {};
+
+        // Display current filters
+        function displayFilters() {
+            const filtersDiv = document.getElementById('currentFilters');
+            let html = '<span style="font-weight: 700; color: #1a1a2e;">Filters:</span>';
+            
+            if (filters.area) html += `<span class="filter-tag">📍 ${filters.area}</span>`;
+            if (filters.bhk) html += `<span class="filter-tag">🏠 ${filters.bhk}</span>`;
+            if (filters.furnishing) html += `<span class="filter-tag">🛋️ ${filters.furnishing}</span>`;
+            if (filters.maxRent) html += `<span class="filter-tag">💰 Up to ₹${parseInt(filters.maxRent).toLocaleString('en-IN')}</span>`;
+            
+            filtersDiv.innerHTML = html;
+        }
+
+        // Display properties
+        function displayProperties() {
+            const grid = document.getElementById('productsGrid');
+            let filteredProps = properties;
+
+            // Apply filters
+            if (filters.area) {
+                filteredProps = filteredProps.filter(p => p.area === filters.area);
+            }
+            if (filters.bhk) {
+                filteredProps = filteredProps.filter(p => p.bhk === filters.bhk);
+            }
+            if (filters.furnishing) {
+                filteredProps = filteredProps.filter(p => p.furnishing === filters.furnishing);
+            }
+            if (filters.maxRent) {
+                filteredProps = filteredProps.filter(p => p.price <= parseInt(filters.maxRent));
+            }
+
+            if (filteredProps.length === 0) {
+                grid.innerHTML = '<div class="no-results">😔 No properties found matching your criteria.<br>Try adjusting your filters.</div>';
+                return;
+            }
+
+            grid.innerHTML = filteredProps.map(prop => `
+                <div class="property-card">
+                    <div class="property-image">
+                        🏠
+                        <span class="property-badge ${prop.badge}">${prop.badge.toUpperCase()}</span>
+                    </div>
+                    <div class="property-info">
+                        <div class="property-title">${prop.title}</div>
+                        <div class="property-price">₹${prop.price.toLocaleString('en-IN')}/month</div>
+                        <div class="property-details">
+                            <span class="detail-item">🏠 ${prop.bhk}</span>
+                            <span class="detail-item">📏 ${prop.sqft} sq.ft</span>
+                            <span class="detail-item">🛋️ ${prop.furnishing}</span>
+                        </div>
+                        <div class="property-available">✅ Available from: ${prop.available}</div>
+                        <div class="property-actions">
+                            <button class="btn btn-view" onclick="viewDetails(${prop.id})">View Details</button>
+                            <button class="btn btn-book" onclick="addToCart(${prop.id})">Select / Book</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add to cart
+        function addToCart(propId) {
+            const property = properties.find(p => p.id === propId);
+            if (!cart.find(p => p.id === propId)) {
+                cart.push(property);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                alert('✅ Property added to your selections!');
+            } else {
+                alert('ℹ️ This property is already in your selections.');
+            }
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+
+        // View details (placeholder)
+        function viewDetails(propId) {
+            const property = properties.find(p => p.id === propId);
+            alert(`🏠 Property Details:\n\n${property.title}\n\nPrice: ₹${property.price.toLocaleString('en-IN')}/month\nArea: ${property.area}\nType: ${property.bhk}\nSize: ${property.sqft} sq.ft\nFurnishing: ${property.furnishing}\n\nClick "Select / Book" to proceed!`);
+        }
+
+        // Navigation
+        function goHome() {
+            alert('Redirecting to homepage...');
+            // window.location.href = 'index.html';
+        }
+
+        function goToCart() {
+            if (cart.length === 0) {
+                alert('Your selection is empty. Add properties first!');
+                return;
+            }
+            alert('Redirecting to cart...');
+            // window.location.href = 'cart.html';
+        }
+
+        // Initialize
+        displayFilters();
+        displayProperties();
+        updateCartCount();
+
+        // Search functionality
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('.property-card');
+            cards.forEach(card => {
+                const title = card.querySelector('.property-title').textContent.toLowerCase();
+                card.style.display = title.includes(searchTerm) ? 'block' : 'none';
+            });
+        });
+    </script>
+</body>
+</html>
