@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HyderabadHomes - Find Your Perfect Rental Home</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .floating-shapes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 50%;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape:nth-child(1) { width: 300px; height: 300px; top: 10%; left: 10%; animation-delay: 0s; }
+        .shape:nth-child(2) { width: 200px; height: 200px; top: 60%; left: 80%; animation-delay: 3s; }
+        .shape:nth-child(3) { width: 150px; height: 150px; top: 80%; left: 20%; animation-delay: 6s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-50px) rotate(180deg); }
+        }
+
+        /* Navbar */
+        .navbar {
+            background: rgba(10, 14, 39, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #fff 0%, #a78bfa 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.9);
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: #fff;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #a78bfa;
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .list-property-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(245, 87, 108, 0.3);
+        }
+
+        .list-property-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(245, 87, 108, 0.5);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 5rem 5% 3rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(135deg, #fff 0%, #e0c3fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            margin-bottom: 4rem;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease 0.2s backwards;
+        }
+
+        /* Filter Card */
+        .filter-card {
+            background: rgba(255, 255, 255, 0.95);
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.4);
+            animation: fadeInUp 1s ease 0.4s backwards;
+        }
+
+        .filter-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .filter-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .filter-label {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 1.2rem;
+            font-size: 1.2rem;
+        }
+
+        .filter-icon {
+            font-size: 1.5rem;
+        }
+
+        /* Area Selection - Enhanced */
+        .area-container {
+            background: #f8f9ff;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1rem;
+        }
+
+        .area-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            gap: 1rem;
+        }
+
+        .area-tag {
+            padding: 1rem;
+            border: 2px solid #e0e7ff;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            background: white;
+            color: #4c1d95;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .area-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .area-tag:hover::before {
+            left: 100%;
+        }
+
+        .area-tag:hover {
+            border-color: #a78bfa;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(167, 139, 250, 0.3);
+        }
+
+        .area-tag.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #f5576c;
+            color: white;
+            font-size: 0.65rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 10px;
+            font-weight: 700;
+        }
+
+        .coming-soon {
+            text-align: center;
+            color: #6366f1;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        /* BHK Selection - Enhanced */
+        .bhk-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+
+        .bhk-btn {
+            padding: 1.2rem;
+            border: 2px solid #e0e7ff;
+            background: white;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #4c1d95;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .bhk-btn::after {
+            content: '🏠';
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            font-size: 1.2rem;
+            opacity: 0.3;
+        }
+
+        .bhk-btn:hover {
+            border-color: #a78bfa;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(167, 139, 250, 0.3);
+        }
+
+        .bhk-btn.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-color: #667eea;
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Furnishing Options */
+        .furnishing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .furnishing-card {
+            background: white;
+            border: 2px solid #e0e7ff;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .furnishing-card input[type="radio"] {
+            display: none;
+        }
+
+        .furnishing-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .furnishing-card label {
+            font-weight: 600;
+            color: #4c1d95;
+            cursor: pointer;
+        }
+
+        .furnishing-card:hover {
+            border-color: #a78bfa;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(167, 139, 250, 0.3);
+        }
+
+        .furnishing-card.selected {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            color: white;
+        }
+
+        .furnishing-card.selected label {
+            color: white;
+        }
+
+        /* Rent Range Slider */
+        .rent-slider-container {
+            background: #f8f9ff;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+
+        .rent-range input[type="range"] {
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .rent-range input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border: 3px solid #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
+            transition: all 0.3s;
+        }
+
+        .rent-range input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.5);
+        }
+
+        .rent-values {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        .selected-rent {
+            text-align: center;
+            font-size: 2rem;
+            color: #4c1d95;
+            margin-bottom: 1rem;
+            font-weight: 900;
+        }
+
+        /* View Homes Button */
+        .view-homes-btn {
+            width: 100%;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .view-homes-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .view-homes-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .view-homes-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .features-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #fff 0%, #e0c3fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 2.5rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .feature-card:hover .feature-icon {
+            animation: none;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .feature-card h3 {
+            color: #fff;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            font-weight: 700;
+        }
+
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.7;
+        }
+
+        /* Popular Areas Showcase */
+        .popular-areas-section {
+            padding: 4rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #fff 0%, #e0c3fc 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .popular-areas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .popular-area-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .popular-area-card:hover {
+            transform: translateY(-8px) scale(1.05);
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #a78bfa;
+            box-shadow: 0 15px 40px rgba(167, 139, 250, 0.4);
+        }
+
+        .area-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .area-properties {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .area-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .furnishing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bhk-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <nav class="navbar">
+        <div class="logo">🏠 HyderabadHomes</div>
+        <ul class="nav-menu">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#areas">Areas</a></li>
+            <li><a href="#how-it-works">How it Works</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <button class="list-property-btn">List Your Property</button>
+    </nav>
+
+    <section class="hero">
+        <h1>Find Verified Homes for Rent in Hyderabad</h1>
+        <p class="hero-subtitle">Choose your area, BHK, budget and discover move-in ready homes in just a few clicks</p>
+
+        <div class="filter-card">
+            <div class="filter-section">
+                <div class="filter-label">
+                    <span class="filter-icon">📍</span>
+                    <span>Select Your Preferred Area</span>
+                </div>
+                <div class="area-container">
+                    <div class="area-grid" id="areaGrid">
+                        <div class="area-tag" data-area="Gachibowli">
+                            Gachibowli
+                            <span class="popular-badge">HOT</span>
+                        </div>
+                        <div class="area-tag" data-area="Hitech City">
+                            Hitech City
+                            <span class="popular-badge">HOT</span>
+                        </div>
+                        <div class="area-tag" data-area="Banjara Hills">Banjara Hills</div>
+                        <div class="area-tag" data-area="Jubilee Hills">Jubilee Hills</div>
+                        <div class="area-tag" data-area="Kondapur">Kondapur</div>
+                        <div class="area-tag" data-area="Kukatpally">Kukatpally</div>
+                        <div class="area-tag" data-area="Miyapur">Miyapur</div>
+                        <div class="area-tag" data-area="Ameerpet">Ameerpet</div>
+                        <div class="area-tag" data-area="Secunderabad">Secunderabad</div>
+                        <div class="area-tag" data-area="Uppal">Uppal</div>
+                        <div class="area-tag" data-area="Habsiguda">Habsiguda</div>
+                        <div class="area-tag" data-area="SR Nagar">SR Nagar</div>
+                        <div class="area-tag" data-area="LB Nagar">LB Nagar</div>
+                        <div class="area-tag" data-area="Tarnaka">Tarnaka</div>
+                        <div class="area-tag" data-area="Manikonda">Manikonda</div>
+                    </div>
+                    <p class="coming-soon">✨ More areas coming soon...</p>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-label">
+                    <span class="filter-icon">🏠</span>
+                    <span>Select BHK Type</span>
+                </div>
+                <div class="bhk-container" id="bhkButtons">
+                    <button class="bhk-btn" data-bhk="1BHK">1 BHK</button>
+                    <button class="bhk-btn" data-bhk="2BHK">2 BHK</button>
+                    <button class="bhk-btn" data-bhk="3BHK">3 BHK</button>
+                    <button class="bhk-btn" data-bhk="Penthouse">Penthouse</button>
+                    <button class="bhk-btn" data-bhk="Studio">Studio</button>
+                    <button class="bhk-btn" data-bhk="Shared">Shared Room</button>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-label">
+                    <span class="filter-icon">🛋️</span>
+                    <span>Furnishing Type</span>
+                </div>
+                <div class="furnishing-grid">
+                    <div class="furnishing-card selected" data-furnishing="Semi-furnished">
+                        <input type="radio" name="furnishing" value="Semi-furnished" id="semi" checked>
+                        <div class="furnishing-icon">🛋️</div>
+                        <label for="semi">Semi-furnished</label>
+                    </div>
+                    <div class="furnishing-card" data-furnishing="Fully-furnished">
+                        <input type="radio" name="furnishing" value="Fully-furnished" id="full">
+                        <div class="furnishing-icon">✨</div>
+                        <label for="full">Fully Furnished</label>
+                    </div>
+                    <div class="furnishing-card" data-furnishing="Unfurnished">
+                        <input type="radio" name="furnishing" value="Unfurnished" id="unfurn">
+                        <div class="furnishing-icon">📦</div>
+                        <label for="unfurn">Unfurnished</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <div class="filter-label">
+                    <span class="filter-icon">💰</span>
+                    <span>Maximum Rent Budget</span>
+                </div>
+                <div class="rent-slider-container">
+                    <div class="selected-rent" id="selectedRent">₹40,000</div>
+                    <div class="rent-range">
+                        <input type="range" id="rentSlider" min="5000" max="80000" value="40000" step="1000">
+                        <div class="rent-values">
+                            <span>₹5,000</span>
+                            <span>₹80,000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="view-homes-btn" onclick="viewHomes()">
+                🔍 View Available Homes
+            </button>
+        </div>
+    </section>
+
+    <section class="popular-areas-section" id="areas">
+        <h2 class="section-title">Popular Areas in Hyderabad</h2>
+        <div class="popular-areas-grid">
+            <div class="popular-area-card" onclick="selectArea('Gachibowli')">
+                <div class="area-name">Gachibowli</div>
+                <div class="area-properties">200+ Properties</div>
+            </div>
+            <div class="popular-area-card" onclick="selectArea('Hitech City')">
+                <div class="area-name">Hitech City</div>
+                <div class="area-properties">180+ Properties</div>
+            </div>
+            <div class="popular-area-card" onclick="selectArea('Banjara Hills')">
+                <div class="area-name">Banjara Hills</div>
+                <div class="area-properties">150+ Properties</div>
+            </div>
+            <div class="popular-area-card" onclick="selectArea('Kondapur')">
+                <div class="area-name">Kondapur</div>
+                <div class="area-properties">170+ Properties</div>
+            </div>
+            <div class="popular-area-card" onclick="selectArea('Kukatpally')">
+                <div class="area-name">Kukatpally</div>
+                <div class="area-properties">160+ Properties</div>
+            </div>
+            <div class="popular-area-card" onclick="selectArea('Secunderabad')">
+                <div class="area-name">Secunderabad</div>
+                <div class="area-properties">140+ Properties</div>
+            </div>
+            <div class="popular-area-card" onclick="selectArea('Miyapur')">
+                <div class="area-name">Miyapur</div>
+                <div class="area-properties">130+ Properties</div>
+            </div>
+            <div class="popular-area-card" onclick="selectArea('Ameerpet')">
+                <div class="area-name">Ameerpet</div>
+                <div class="area-properties">120+ Properties</div>
+            </div>
+            <div class="popular-area-card" onclick="selectArea('Jubilee Hills')">
+                <div class="area-name">Jubilee Hills</div>
+                <div class="area-properties">110+ Properties</div>
+            </div>
+            <div class="popular-area-card" onclick="selectArea('Manikonda')">
+                <div class="area-name">Manikonda</div>
+                <div class="area-properties">100+ Properties</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <h2 class="features-title">Why Choose HyderabadHomes?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>100% Verified Owners</h3>
+                <p>Every property is verified with genuine owner details and documentation</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🏠</div>
+                <h3>Hyderabad Exclusive</h3>
+                <p>Focused exclusively on Hyderabad's best rental properties and neighborhoods</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📞</div>
+                <h3>Direct Owner Contact</h3>
+                <p>Get owner phone number instantly after booking confirmation - no middlemen</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🕒</div>
+                <h3>24/7 Quick Support</h3>
+                <p>Our dedicated team is always ready to help with any queries or concerns</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💯</div>
+                <h3>No Hidden Charges</h3>
+                <p>Transparent pricing with no surprise fees or brokerage commissions</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Instant Booking</h3>
+                <p>Book your dream home in minutes with our streamlined process</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        let selectedFilters = {
+            area: null,
+            bhk: null,
+            furnishing: 'Semi-furnished',
+            maxRent: 40000
+        };
+
+        // Area selection
+        document.querySelectorAll('.area-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                document.querySelectorAll('.area-tag').forEach(t => t.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedFilters.area = this.dataset.area;
+            });
+        });
+
+        // BHK selection
+        document.querySelectorAll('.bhk-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.bhk-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedFilters.bhk = this.dataset.bhk;
+            });
+        });
+
+        // Furnishing selection
+        document.querySelectorAll('.furnishing-card').forEach(card => {
+            card.addEventListener('click', function() {
+                document.querySelectorAll('.furnishing-card').forEach(c => c.classList.remove('selected'));
+                this.classList.add('selected');
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                selectedFilters.furnishing = this.dataset.furnishing;
+            });
+        });
+
+        // Rent slider
+        const rentSlider = document.getElementById('rentSlider');
+        const selectedRent = document.getElementById('selectedRent');
+        
+        rentSlider.addEventListener('input', function() {
+            selectedFilters.maxRent = this.value;
+            selectedRent.textContent = '₹' + parseInt(this.value).toLocaleString('en-IN');
+        });
+
+        // Select area from popular areas section
+        function selectArea(areaName) {
+            const areaTag = document.querySelector(`.area-tag[data-area="${areaName}"]`);
+            if (areaTag) {
+                document.querySelectorAll('.area-tag').forEach(t => t.classList.remove('selected'));
+                areaTag.classList.add('selected');
+                selectedFilters.area = areaName;
+                
+                // Scroll to filter card
+                document.querySelector('.filter-card').scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }
+
+        function viewHomes() {
+            if (!selectedFilters.area) {
+                alert('⚠️ Please select an area first!');
+                return;
+            }
+            if (!selectedFilters.bhk) {
+                alert('⚠️ Please select a BHK type!');
+                return;
+            }
+            
+            // Store filters in localStorage
+            localStorage.setItem('filters', JSON.stringify(selectedFilters));
+            
+            // Show confirmation
+            alert('✅ Filters Applied Successfully!\n\n' +
+                  '📍 Area: ' + selectedFilters.area + '\n' +
+                  '🏠 BHK: ' + selectedFilters.bhk + '\n' +
+                  '🛋️ Furnishing: ' + selectedFilters.furnishing + '\n' +
+                  '💰 Max Rent: ₹' + parseInt(selectedFilters.maxRent).toLocaleString('en-IN') + '\n\n' +
+                  'Redirecting to properties...');
+            
+            // In production: window.location.href = 'products.html';
+        }
